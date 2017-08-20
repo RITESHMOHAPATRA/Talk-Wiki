@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #content {
+        height: 100px;
+      }
+      h1 {
+        text-align: center;
+      }
+
+      p {
+        text-align: center;
+      }
+    </style>
+
+    <meta charset="utf-8">
+    <title> Spell Checker </title>
+    <script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"> </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  </head>
+  <body>
+    <h1> GDG BBSR </h1>
+    <p> Spell Check </p>
+    <div id = "content"></div>
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <textarea id = "text"> </textarea>
+        <br>
+        <button onclick="show()">Submit</button>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+</div>
+
+    <script type = "text/javascript">
+      //var dictionary = ["a","able","ability","break","cricket"];
+      var dictionary = [];
+      var words = [];
+      var newhtml = "";
+      var color = 'red';
+      $.getJSON("dictionary.json",function(data){
+        dictionary = data.commonWords;
+      });
+
+      function show() {
+        var x = document.getElementById('text').value;
+         // console.log(x);
+        words = x.split(" ");
+        // console.log(words);
+        words.forEach(function(word){
+          if(dictionary.indexOf(word) !== -1){
+              newhtml += word + " ";
+          }
+          else{
+            newhtml += givemecolor('red',word);
+          }
+
+          });
+          function givemecolor(thecolor,thetext)
+          {
+            return '<span style="color:'+thecolor+'>'+thetext+'</span>';
+          }
+          document.getElementById('content').innerHTML = newhtml;
+      };
+    </script>
+  </body>
+</html>
